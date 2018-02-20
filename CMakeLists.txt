@@ -10,4 +10,4 @@ set(MATH_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/include")
 
 include_directories("${MATH_INCLUDE_DIRS}")
 
-add_executable(test test/main.cpp)
+add_executable(unit_test test/main.cpp)
