@@ -98,46 +98,6 @@ struct mat3
 		printf("[%f, %f, %f]\n", m31, m32, m33);
 	}
 
-	inline mat3 operator*(const T& s) const
-	{
-		mat3 r;
-
-		for (int i = 0; i < 9; i++)
-			r.elem[i] = elem[i] * s;
-
-		return r;
-	}
-
-	inline vec3<T> operator*(const vec3<T>& v) const
-	{
-		vec3<T> r;
-
-		r.x = (m11 * v.x) + (m12 * v.y) + (m13 * v.z);
-		r.y = (m21 * v.x) + (m22 * v.y) + (m23 * v.z);
-		r.z = (m31 * v.x) + (m32 * v.y) + (m33 * v.z);
-	
-		return r;
-	}
-
-	inline mat3 operator*(const mat3<T>& m) const
-	{
-		mat3 r;
-
-		r.m11 = m11 * m.m11 + m12 * m.m21 + m13 * m.m31;
-		r.m12 = m11 * m.m12 + m12 * m.m22 + m13 * m.m32;
-		r.m13 = m11 * m.m13 + m12 * m.m23 + m13 * m.m33;
-
-		r.m21 = (m21 * m.m11) + (m22 * m.m21) + (m23 * m.m31);
-		r.m22 = (m21 * m.m12) + (m22 * m.m22) + (m23 * m.m32);
-		r.m23 = (m21 * m.m13) + (m22 * m.m23) + (m23 * m.m33);
-
-		r.m31 = (m31 * m.m11) + (m32 * m.m21) + (m33 * m.m31);
-		r.m32 = (m31 * m.m12) + (m32 * m.m22) + (m33 * m.m32);
-		r.m33 = (m31 * m.m13) + (m32 * m.m23) + (m33 * m.m33);
-
-		return r;
-	}
-
 	inline const vec3<T>& operator[] (unsigned index) const
 	{
 		assert(index < 3);
@@ -150,5 +110,48 @@ struct mat3
 		return column[index];
 	}
 };
+
+template<typename T>
+inline mat3<T> operator*(const mat3<T>& lhs, const T& rhs)
+{
+	mat3<T> r;
+
+	for (int i = 0; i < 9; i++)
+		r.elem[i] = lhs.elem[i] * rhs;
+
+	return r;
+}
+
+template<typename T>
+inline vec3<T> operator*(const mat3<T>& lhs, const vec3<T>& rhs)
+{
+	vec3<T> r;
+
+	r.x = (lhs.m11 * rhs.x) + (lhs.m12 * rhs.y) + (lhs.m13 * rhs.z);
+	r.y = (lhs.m21 * rhs.x) + (lhs.m22 * rhs.y) + (lhs.m23 * rhs.z);
+	r.z = (lhs.m31 * rhs.x) + (lhs.m32 * rhs.y) + (lhs.m33 * rhs.z);
+
+	return r;
+}
+
+template<typename T>
+inline mat3<T> operator*(const mat3<T>& lhs, const mat3<T>& rhs)
+{
+	mat3<T> r;
+
+	r.m11 = (lhs.m11 * rhs.m11) + (lhs.m12 * rhs.m21) + (lhs.m13 * rhs.m31);
+	r.m12 = (lhs.m11 * rhs.m12) + (lhs.m12 * rhs.m22) + (lhs.m13 * rhs.m32);
+	r.m13 = (lhs.m11 * rhs.m13) + (lhs.m12 * rhs.m23) + (lhs.m13 * rhs.m33);
+							 				   
+	r.m21 = (lhs.m21 * rhs.m11) + (lhs.m22 * rhs.m21) + (lhs.m23 * rhs.m31);
+	r.m22 = (lhs.m21 * rhs.m12) + (lhs.m22 * rhs.m22) + (lhs.m23 * rhs.m32);
+	r.m23 = (lhs.m21 * rhs.m13) + (lhs.m22 * rhs.m23) + (lhs.m23 * rhs.m33);
+			   					 				   
+	r.m31 = (lhs.m31 * rhs.m11) + (lhs.m32 * rhs.m21) + (lhs.m33 * rhs.m31);
+	r.m32 = (lhs.m31 * rhs.m12) + (lhs.m32 * rhs.m22) + (lhs.m33 * rhs.m32);
+	r.m33 = (lhs.m31 * rhs.m13) + (lhs.m32 * rhs.m23) + (lhs.m33 * rhs.m33);
+
+	return r;
+}
 
 using mat3f = mat3<float>;

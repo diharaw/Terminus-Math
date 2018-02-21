@@ -67,7 +67,7 @@ int main(int argc, const char * argv[]) {
 		a.print();
 		printf("\n");
 
-		a = a * 2;
+		a = a * 2.0f;
 
 		a.print();
 		printf("\n");
