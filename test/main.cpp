@@ -76,6 +76,45 @@ int main(int argc, const char * argv[]) {
 		b.print();
 	}
 
+	{
+		vec3f v(2.0f, 2.0f, 2.0f);
+		mat3f m;
+
+		vec3f a = m * v;
+
+		printf("\n");
+		a.print();
+	}
+
+	{
+		vec4f v(2.0f, 2.0f, 2.0f, 2.0f);
+		mat4f m;
+
+		vec4f a = m * v;
+
+		printf("\n");
+		a.print();
+	}
+
+	{
+		mat4f a;
+		mat4f b;
+
+		mat4f c = a * b;
+
+		printf("\n");
+		c.print();
+
+		printf("\n");
+		c[0].print();
+		printf("\n");
+		c[1].print();
+		printf("\n");
+		c[2].print();
+		printf("\n");
+		c[3].print();
+	}
+
 	std::cin.get();
 	return 0;
 }

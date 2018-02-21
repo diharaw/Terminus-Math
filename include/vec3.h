@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdint.h>
+#include <assert.h>
 
 template<typename T>
 struct vec3
@@ -20,67 +21,74 @@ struct vec3
 	vec3(T v) : x(v), y(v), z(v) {}
 	vec3(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
 
-	inline vec3 operator+(vec3& other)
+	inline vec3 operator+(const vec3& other) const
 	{
 		return vec3(x + other.x, y + other.y, z + other.z);
 	}
 
-	inline vec3 operator-(vec3& other)
+	inline vec3 operator-(const vec3& other) const
 	{
 		return vec3(x - other.x, y - other.y, z - other.z);
 	}
 
-	inline vec3 operator*(T& s)
+	inline vec3 operator*(const T& s) const
 	{
 		return vec3(x * s, y * s, z * s);
 	}
 
-	inline vec3 operator/(T& s)
+	inline vec3 operator/(const T& s) const
 	{
 		return vec3(x / s, y / s, z / s);
 	}
 
-	inline float length()
+	inline const T& operator[] (unsigned index) const
+	{
+		assert(index < 3);
+		return data[index];
+	}
+
+	inline T& operator[] (unsigned index)
+	{
+		assert(index < 3);
+		return data[index];
+	}
+
+	inline float length() const
 	{
 		return sqrt(x*x + y * y + z * z);
 	}
 
-	inline float distance(vec3& v)
+	inline float distance(const vec3& v) const
 	{
 		auto r = *this - v;
 		return r.length();
 	}
 
-	inline float dot(vec3& b)
+	inline float dot(const vec3& b) const
 	{
 		return x * b.x + y * b.y + z * b.z;
 	}
 
-	inline float dot(vec3& b) const
-	{
-		return x * b.x + y * b.y + z * b.z;
-	}
-
-	inline vec3 cross(const vec3& b)
+	inline vec3 cross(const vec3& b) const
 	{
 		return vec3(y * b.z - z * b.y,
 					z * b.x - x * b.z,
 					x * b.y - y * b.x);
 	}
 
-	inline vec3 normalize()
+	inline vec3 normalize() const
 	{
 		auto l = length();
 		return vec3(x / l, y / l, z / l);
 	}
 
-	inline vec3 direction(vec3& to)
+	inline vec3 direction(const vec3& to) const
 	{
 		auto v = to - *this;
 		return v.normalize();
 	}
 
-	inline void print()
+	inline void print() const
 	{
 		printf("[%f, %f, %f]\n", x, y, z);
 	}
