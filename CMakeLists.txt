@@ -6,8 +6,14 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
-set(MATH_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/include")
+set(MATH_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
 
-include_directories("${MATH_INCLUDE_DIRS}")
+set(MATH_HEADERS "${PROJECT_SOURCE_DIR}/include/vec2.h"
+                 "${PROJECT_SOURCE_DIR}/include/vec3.h"
+                 "${PROJECT_SOURCE_DIR}/include/vec4.h"
+                 "${PROJECT_SOURCE_DIR}/include/mat3.h"
+                 "${PROJECT_SOURCE_DIR}/include/mat4.h")
 
-add_executable(unit_test test/main.cpp)
+include_directories(${MATH_INCLUDE_DIR})
+
+add_executable(unit_test test/main.cpp ${MATH_HEADERS})

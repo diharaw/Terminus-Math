@@ -4,6 +4,8 @@
 
 #include <iostream>
 
+using namespace math;
+
 int main(int argc, const char * argv[]) {
 
 	{
