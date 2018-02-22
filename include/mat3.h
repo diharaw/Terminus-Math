@@ -80,6 +80,35 @@ namespace math
 			return r;
 		}
 
+		inline T determinant() const
+		{
+			return (m11 * ((m22 * m33) - (m23 * m32))) - (m12 * ((m21 * m33) - (m23 * m31))) - (m13 * ((m21 * m32) - (m22 * m31)));
+		}
+
+		inline mat3 adjoint() const
+		{
+			mat3 r;
+
+			r.m11 =   (m22 * m33) - (m23 * m32);
+			r.m12 = -((m21 * m33) - (m23 * m31));
+			r.m13 =   (m21 * m32) - (m22 * m31);
+
+			r.m21 = -((m12 * m33) - (m13 * m32));
+			r.m22 =   (m11 * m33) - (m13 * m31);
+			r.m23 = -((m11 * m32) - (m12 * m31));
+
+			r.m31 =   (m12 * m23) - (m13 * m22);
+			r.m32 = -((m11 * m23) - (m13 * m21));
+			r.m33 =   (m11 * m22) - (m12 * m21);
+
+			return r.transpose();
+		}
+
+		inline mat3 inverse() const
+		{
+			return adjoint() / determinant(); // @NOTE(Dihara): Watch out for divide by zero!
+		}
+
 		inline void print() const
 		{
 			printf("[%f, %f, %f]\n", m11, m12, m13);

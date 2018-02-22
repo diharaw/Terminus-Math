@@ -117,6 +117,20 @@ int main(int argc, const char * argv[]) {
 		c[3].print();
 	}
 
+	{
+		printf("Adjoint Test.\n A: \n\n");
+
+		mat3f a(-4, -3, 3,
+				 0, 2, -2,
+				 1, 4, -1);
+
+		a.print();
+
+		printf("adj A: \n\n");
+		mat3f adj = a.adjoint();
+		adj.print();
+	}
+
 	std::cin.get();
 	return 0;
 }
