@@ -1,6 +1,8 @@
 #include <vec2.h>
 #include <mat3.h>
 #include <mat4.h>
+#include <transform.h>
+#include <utility.h>
 
 #include <iostream>
 
@@ -129,6 +131,25 @@ int main(int argc, const char * argv[]) {
 		printf("adj A: \n\n");
 		mat3f adj = a.adjoint();
 		adj.print();
+		printf("\n");
+	}
+
+	{
+		vec4f a(1.0f, 0.0f, 0.0f, 0.0f);
+		a.print();
+		printf("\n");
+
+		mat4f rot1 = rotation(0.0f, 0.0f, radians(90.0f));
+		rot1.print();
+		printf("\n");
+
+		mat4f rot2 = rotation(radians(90.0f), vec3f(0.0f, 0.0f, 1.0));
+		rot2.print();
+		printf("\n");
+
+		vec4f r = rot1 * a;
+		r.print();
+		printf("\n");
 	}
 
 	std::cin.get();
