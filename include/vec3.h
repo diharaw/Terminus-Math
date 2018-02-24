@@ -58,7 +58,7 @@ namespace math
 
 		inline float length() const
 		{
-			return sqrt(x*x + y * y + z * z);
+			return sqrt(x * x + y * y + z * z);
 		}
 
 		inline float distance(const vec3& v) const

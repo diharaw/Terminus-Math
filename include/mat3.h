@@ -127,50 +127,47 @@ namespace math
 			assert(index < 3);
 			return column[index];
 		}
+
+		friend mat3 operator*(const mat3& lhs, const T& rhs)
+		{
+			mat3 r;
+
+			for (int i = 0; i < 9; i++)
+				r.elem[i] = lhs.elem[i] * rhs;
+
+			return r;
+		}
+
+		friend vec3<T> operator*(const mat3& lhs, const vec3<T>& rhs)
+		{
+			vec3<T> r;
+
+			r.x = (lhs.m11 * rhs.x) + (lhs.m12 * rhs.y) + (lhs.m13 * rhs.z);
+			r.y = (lhs.m21 * rhs.x) + (lhs.m22 * rhs.y) + (lhs.m23 * rhs.z);
+			r.z = (lhs.m31 * rhs.x) + (lhs.m32 * rhs.y) + (lhs.m33 * rhs.z);
+
+			return r;
+		}
+
+		friend mat3 operator*(const mat3& lhs, const mat3& rhs)
+		{
+			mat3 r;
+
+			r.m11 = (lhs.m11 * rhs.m11) + (lhs.m12 * rhs.m21) + (lhs.m13 * rhs.m31);
+			r.m12 = (lhs.m11 * rhs.m12) + (lhs.m12 * rhs.m22) + (lhs.m13 * rhs.m32);
+			r.m13 = (lhs.m11 * rhs.m13) + (lhs.m12 * rhs.m23) + (lhs.m13 * rhs.m33);
+
+			r.m21 = (lhs.m21 * rhs.m11) + (lhs.m22 * rhs.m21) + (lhs.m23 * rhs.m31);
+			r.m22 = (lhs.m21 * rhs.m12) + (lhs.m22 * rhs.m22) + (lhs.m23 * rhs.m32);
+			r.m23 = (lhs.m21 * rhs.m13) + (lhs.m22 * rhs.m23) + (lhs.m23 * rhs.m33);
+
+			r.m31 = (lhs.m31 * rhs.m11) + (lhs.m32 * rhs.m21) + (lhs.m33 * rhs.m31);
+			r.m32 = (lhs.m31 * rhs.m12) + (lhs.m32 * rhs.m22) + (lhs.m33 * rhs.m32);
+			r.m33 = (lhs.m31 * rhs.m13) + (lhs.m32 * rhs.m23) + (lhs.m33 * rhs.m33);
+
+			return r;
+		}
 	};
-
-	template<typename T>
-	inline mat3<T> operator*(const mat3<T>& lhs, const T& rhs)
-	{
-		mat3<T> r;
-
-		for (int i = 0; i < 9; i++)
-			r.elem[i] = lhs.elem[i] * rhs;
-
-		return r;
-	}
-
-	template<typename T>
-	inline vec3<T> operator*(const mat3<T>& lhs, const vec3<T>& rhs)
-	{
-		vec3<T> r;
-
-		r.x = (lhs.m11 * rhs.x) + (lhs.m12 * rhs.y) + (lhs.m13 * rhs.z);
-		r.y = (lhs.m21 * rhs.x) + (lhs.m22 * rhs.y) + (lhs.m23 * rhs.z);
-		r.z = (lhs.m31 * rhs.x) + (lhs.m32 * rhs.y) + (lhs.m33 * rhs.z);
-
-		return r;
-	}
-
-	template<typename T>
-	inline mat3<T> operator*(const mat3<T>& lhs, const mat3<T>& rhs)
-	{
-		mat3<T> r;
-
-		r.m11 = (lhs.m11 * rhs.m11) + (lhs.m12 * rhs.m21) + (lhs.m13 * rhs.m31);
-		r.m12 = (lhs.m11 * rhs.m12) + (lhs.m12 * rhs.m22) + (lhs.m13 * rhs.m32);
-		r.m13 = (lhs.m11 * rhs.m13) + (lhs.m12 * rhs.m23) + (lhs.m13 * rhs.m33);
-
-		r.m21 = (lhs.m21 * rhs.m11) + (lhs.m22 * rhs.m21) + (lhs.m23 * rhs.m31);
-		r.m22 = (lhs.m21 * rhs.m12) + (lhs.m22 * rhs.m22) + (lhs.m23 * rhs.m32);
-		r.m23 = (lhs.m21 * rhs.m13) + (lhs.m22 * rhs.m23) + (lhs.m23 * rhs.m33);
-
-		r.m31 = (lhs.m31 * rhs.m11) + (lhs.m32 * rhs.m21) + (lhs.m33 * rhs.m31);
-		r.m32 = (lhs.m31 * rhs.m12) + (lhs.m32 * rhs.m22) + (lhs.m33 * rhs.m32);
-		r.m33 = (lhs.m31 * rhs.m13) + (lhs.m32 * rhs.m23) + (lhs.m33 * rhs.m33);
-
-		return r;
-	}
 
 	using mat3f = mat3<float>;
 

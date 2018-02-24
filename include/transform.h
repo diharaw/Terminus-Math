@@ -75,7 +75,7 @@ namespace math
 		return m;
 	}
 
-	inline mat4f scale(const vec3f& _axis, const float& _scale)
+	inline mat4f scale(const float& _scale, const vec3f& _axis)
 	{
 		mat4f m;
 
