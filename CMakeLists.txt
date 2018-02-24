@@ -12,7 +12,10 @@ set(MATH_HEADERS "${PROJECT_SOURCE_DIR}/include/vec2.h"
                  "${PROJECT_SOURCE_DIR}/include/vec3.h"
                  "${PROJECT_SOURCE_DIR}/include/vec4.h"
                  "${PROJECT_SOURCE_DIR}/include/mat3.h"
-                 "${PROJECT_SOURCE_DIR}/include/mat4.h")
+                 "${PROJECT_SOURCE_DIR}/include/mat4.h"
+                 "${PROJECT_SOURCE_DIR}/include/transform.h"
+                 "${PROJECT_SOURCE_DIR}/include/quat.h"
+                 "${PROJECT_SOURCE_DIR}/include/utility.h")
 
 include_directories(${MATH_INCLUDE_DIR})
 
