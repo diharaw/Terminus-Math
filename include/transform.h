@@ -137,7 +137,31 @@ namespace math
 
 	inline vec3f mat4_to_euler(const mat4f& _mat)
 	{
+		vec3f euler;
 
+		float sp = -_mat.m23;
+
+		if (sp <= -1.0f)
+		{
+			euler.x = -1.570796f;
+		}
+		else if (sp >= 1.0f)
+			euler.x = 1.570796f;
+		else
+			euler.x = asinf(sp);
+
+		if (fabs(sp) > 0.9999f)
+		{
+			euler.z = 0.0f;
+			euler.y = atan2(-_mat.m31, _mat.m11);
+		}
+		else
+		{
+			euler.y = atan2(_mat.m31, _mat.m11);
+			euler.z = atan2(_mat.m21, _mat.m22);
+		}
+
+		return euler;
 	}
 
 	inline vec3f quat_to_euler(const quat& _quat)
