@@ -96,7 +96,28 @@ namespace math
 
 	inline mat4f euler_to_mat4(const float& _x, const float& _y, const float& _z)
 	{
+		mat4f m;
 
+		float ch = cosf(_y);
+		float cb = cosf(_z);
+		float cp = cosf(_x);
+		float sh = sinf(_y);
+		float sb = sinf(_z);
+		float sp = sinf(_x);
+
+		m.m11 = ch * cb + sh * sp * sb;
+		m.m12 = ch * sb + sh * sp * cb;
+		m.m13 = sh * cp;
+
+		m.m21 = sb * cp;
+		m.m22 = cb * cp;
+		m.m23 = -sp;
+
+		m.m31 = -sh * cb + ch * sp * sb;
+		m.m32 = sb * sh + ch * sp * cb;
+		m.m33 = ch * cp;
+
+		return m;
 	}
 
 	inline mat4f quat_to_mat4(const quat& _quat)
