@@ -20,8 +20,8 @@ namespace math
 		};
 
 		vec4() : x(0.0), y(0.0), z(0.0), w(0.0) {}
-		vec4(T v) : x(v), y(v), z(v), w(v) {}
-		vec4(T _x, T _y, T _z, T _w) : x(_x), y(_y), z(_z), w(_w) {}
+		vec4(const T v) : x(v), y(v), z(v), w(v) {}
+		vec4(const T& _x, const T& _y, const T& _z, const T& _w) : x(_x), y(_y), z(_z), w(_w) {}
 
 		inline vec4 operator+(const vec4& other) const
 		{

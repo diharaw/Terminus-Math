@@ -30,10 +30,10 @@ namespace math
 			m44 = 1;
 		}
 
-		mat4(float _m11, float _m12, float _m13, float _m14,
-			float _m21, float _m22, float _m23, float _m24,
-			float _m31, float _m32, float _m33, float _m34,
-			float _m41, float _m42, float _m43, float _m44)
+		mat4(const float& _m11, const float& _m12, const float& _m13, const float& _m14,
+			 const float& _m21, const float& _m22, const float& _m23, const float& _m24,
+			 const float& _m31, const float& _m32, const float& _m33, const float& _m34,
+			 const float& _m41, const float& _m42, const float& _m43, const float& _m44)
 		{
 			m11 = _m11;
 			m12 = _m12;
@@ -56,7 +56,7 @@ namespace math
 			m44 = _m44;
 		}
 
-		mat4(vec4<T> _c1, vec4<T> _c2, vec4<T> _c3, vec4<T> _c4)
+		mat4(const vec4<T>& _c1, const vec4<T>& _c2, const vec4<T>& _c3, const vec4<T>& _c4)
 		{
 			m11 = _c1.x;
 			m21 = _c1.y;
@@ -79,7 +79,7 @@ namespace math
 			m44 = _c4.w;
 		}
 
-		inline mat4 transpose()
+		inline mat4 transpose() const
 		{
 			mat4 r;
 

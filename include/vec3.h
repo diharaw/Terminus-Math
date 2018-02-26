@@ -21,8 +21,8 @@ namespace math
 		};
 
 		vec3() : x(0.0), y(0.0), z(0.0) {}
-		vec3(T v) : x(v), y(v), z(v) {}
-		vec3(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
+		vec3(const T& v) : x(v), y(v), z(v) {}
+		vec3(const T& _x, const T& _y, const T& _z) : x(_x), y(_y), z(_z) {}
 
 		inline vec3 operator+(const vec3& other) const
 		{

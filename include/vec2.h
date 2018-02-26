@@ -20,43 +20,38 @@ namespace math
 		};
 
 		vec2() : x(0.0), y(0.0) {}
-		vec2(T v) : x(v), y(v) {}
-		vec2(T _x, T _y) : x(_x), y(_y) {}
+		vec2(const T& v) : x(v), y(v) {}
+		vec2(const T& _x, const T& _y) : x(_x), y(_y) {}
 
-		inline vec2 operator+(vec2& other)
+		friend vec2 operator+(const vec2& lhs, const vec2& rhs)
 		{
-			return vec2(x + other.x, y + other.y);
+			return vec2(lhs.x + rhs.x, lhs.y + rhs.y);
 		}
 
-		inline vec2 operator-(vec2& other)
+		friend vec2 operator-(const vec2& lhs, const vec2& rhs)
 		{
-			return vec2(x - other.x, y - other.y);
+			return vec2(lhs.x - rhs.x, lhs.y - rhs.y);
 		}
 
-		inline vec2 operator*(T& s)
+		inline vec2 operator*(const T& s)
 		{
 			return vec2(x * s, y * s);
 		}
 
-		inline vec2 operator/(T& s)
+		inline vec2 operator/(const T& s)
 		{
 			return vec2(x / s, y / s);
 		}
 
-		inline float length()
+		inline float length() const
 		{
 			return sqrt(x*x + y * y);
 		}
 
-		inline float distance(vec2& v)
+		inline float distance(const vec2& v) const
 		{
 			auto r = *this - v;
 			return r.length();
-		}
-
-		inline float dot(vec2& b)
-		{
-			return x * b.x + y * b.y;
 		}
 
 		inline float dot(vec2& b) const
@@ -64,19 +59,19 @@ namespace math
 			return x * b.x + y * b.y;
 		}
 
-		inline vec2 normalize()
+		inline vec2 normalize() const
 		{
 			auto l = length();
 			return vec2(x / l, y / l);
 		}
 
-		inline vec2 direction(vec2& to)
+		inline vec2 direction(const vec2& to) const
 		{
 			auto v = to - *this;
 			return v.normalize();
 		}
 
-		inline void print()
+		inline void print() const
 		{
 			printf("[%f, %f]\n", x, y);
 		}
