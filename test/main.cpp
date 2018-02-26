@@ -3,6 +3,7 @@
 #include <mat4.h>
 #include <transform.h>
 #include <utility.h>
+#include <simd_mat4.h>
 
 #include <iostream>
 
@@ -150,6 +151,13 @@ int main(int argc, const char * argv[]) {
 		vec4f r = rot1 * a;
 		r.print();
 		printf("\n");
+	}
+
+	{
+		simd::mat4f m1;
+		simd::mat4f m2;
+
+		simd::mat4f m = m1 * m2;
 	}
 
 	std::cin.get();
