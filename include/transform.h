@@ -141,12 +141,84 @@ namespace math
 
 	inline quat mat4_to_quat(const mat4f& _mat)
 	{
+		quat q;
 
+		float fourWSquaredMinus1 = _mat.m11 + _mat.m22 + _mat.m33;
+		float fourXSquaredMinus1 = _mat.m11 - _mat.m22 - _mat.m33;
+		float fourYSquaredMinus1 = _mat.m22 - _mat.m11 - _mat.m33;
+		float fourZSquaredMinus1 = _mat.m33 - _mat.m11 - _mat.m22;
+
+		int biggestIndex = 0;
+		float fourBiggestSquaredMinus1 = fourWSquaredMinus1;
+
+		if (fourXSquaredMinus1 > fourBiggestSquaredMinus1)
+		{
+			fourBiggestSquaredMinus1 = fourXSquaredMinus1;
+			biggestIndex = 1;
+		}
+		if (fourYSquaredMinus1 > fourBiggestSquaredMinus1)
+		{
+			fourBiggestSquaredMinus1 = fourYSquaredMinus1;
+			biggestIndex = 2;
+		}
+		if (fourZSquaredMinus1 > fourBiggestSquaredMinus1)
+		{
+			fourBiggestSquaredMinus1 = fourZSquaredMinus1;
+			biggestIndex = 3;
+		}
+
+		float biggestVal = sqrt(fourBiggestSquaredMinus1 + 1.0f) * 0.5f;
+		float mult = 0.25f / biggestVal;
+
+		switch (biggestIndex)
+		{
+		case 0:
+		{
+			q.w = biggestVal;
+			q.v.x = (_mat.m32 - _mat.m23) * mult;
+			q.v.y = (_mat.m13 - _mat.m31) * mult;
+			q.v.z = (_mat.m21 - _mat.m12) * mult;
+			break;
+		}
+		case 1:
+		{
+			q.v.x = biggestVal;
+			q.w = (_mat.m32 - _mat.m23) * mult;
+			q.v.y = (_mat.m21 - _mat.m12) * mult;
+			q.v.z = (_mat.m13 - _mat.m31) * mult;
+			break;
+		}
+		case 2:
+		{
+			q.v.y = biggestVal;
+			q.w = (_mat.m13 - _mat.m31) * mult;
+			q.v.x = (_mat.m21 - _mat.m12) * mult;
+			q.v.z = (_mat.m32 - _mat.m23) * mult;
+			break;
+		}
+		case 3:
+		{
+			q.v.z = biggestVal;
+			q.w = (_mat.m21 - _mat.m12) * mult;
+			q.v.x = (_mat.m13 - _mat.m31) * mult;
+			q.v.y = (_mat.m32 - _mat.m23) * mult;
+			break;
+		}
+		}
+
+		return q;
 	}
 
 	inline quat euler_to_quat(const float& _x, const float& _y, const float& _z)
 	{
+		quat q;
 
+		q.w = cosf(_y / 2.0f) * cosf(_x / 2.0f) * cosf(_z / 2.0f) + sinf(_y / 2.0f) * sinf(_x / 2.0f) * sinf(_z / 2.0f);
+		q.v.x = cosf(_y / 2.0f) * sinf(_x / 2.0f) * cosf(_z / 2.0f) - sinf(_y / 2.0f) * cosf(_x / 2.0f) * sinf(_z / 2.0f);
+		q.v.y = cosf(_y / 2.0f) * sinf(_x / 2.0f) * sinf(_z / 2.0f) - sinf(_y / 2.0f) * cosf(_x / 2.0f) * cosf(_z / 2.0f);
+		q.v.z = sinf(_y / 2.0f) * sinf(_x / 2.0f) * cosf(_z / 2.0f) - cosf(_y / 2.0f) * cosf(_x / 2.0f) * sinf(_z / 2.0f);
+
+		return q;
 	}
 
 	inline vec3f mat4_to_euler(const mat4f& _mat)
