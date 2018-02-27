@@ -252,6 +252,23 @@ namespace math
 
 	inline vec3f quat_to_euler(const quat& _quat)
 	{
+		vec3f e;
 
+		float sp = -2.0f * (_quat.v.y - _quat.w * _quat.v.x);
+
+		if (fabs(sp) > 0.9999f)
+		{
+			e.x = 1.570796f * sp;
+			e.y = atan2(-_quat.v.x * _quat.v.z + _quat.w * _quat.v.y, 0.5f - _quat.v.y * _quat.v.y - _quat.v.z * _quat.v.z);
+			e.z = 0.0f;
+		}
+		else
+		{
+			e.x = asin(sp);
+			e.y = atan2(_quat.v.x * _quat.v.z + _quat.w * _quat.v.y, 0.5f - _quat.v.x * _quat.v.x - _quat.v.y * _quat.v.y);
+			e.z = atan2(_quat.v.x * _quat.v.y + _quat.w * _quat.v.z, 0.5f - _quat.v.x * _quat.v.x - _quat.v.z * _quat.v.z);
+		}
+
+		return e;
 	}
 }
