@@ -122,7 +122,21 @@ namespace math
 
 	inline mat4f quat_to_mat4(const quat& _quat)
 	{
+		mat4f m;
 
+		m.m11 = 1.0f - (2.0f * (_quat.v.y * _quat.v.y)) - (2.0f * (_quat.v.z * _quat.v.z));
+		m.m12 = (2.0f * (_quat.v.x * _quat.v.y)) - (2.0f * (_quat.w * _quat.v.z));
+		m.m13 = (2.0f * (_quat.v.x * _quat.v.z)) + (2.0f * (_quat.w * _quat.v.y));
+
+		m.m21 = (2.0f * (_quat.v.x * _quat.v.y)) + (2.0f * (_quat.w * _quat.v.z));
+		m.m22 = 1.0f - (2.0f * (_quat.v.x * _quat.v.z)) - (2.0f * (_quat.v.z * _quat.v.z));
+		m.m23 = (2.0f * (_quat.v.y * _quat.v.z)) + (2.0f * (_quat.w * _quat.v.x));
+
+		m.m31 = (2.0f * (_quat.v.x * _quat.v.y)) - (2.0f * (_quat.w * _quat.v.z));
+		m.m32 = (2.0f * (_quat.v.y * _quat.v.z)) + (2.0f * (_quat.w * _quat.v.x));
+		m.m33 = 1.0f - (2.0f * (_quat.v.x * _quat.v.x)) - (2.0f * (_quat.v.y * _quat.v.y));
+
+		return m;
 	}
 
 	inline quat mat4_to_quat(const mat4f& _mat)
