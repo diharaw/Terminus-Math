@@ -6,49 +6,69 @@
 
 namespace math
 {
-	inline mat4f perspective(const float& aspect, const float& fov, const float& near, const float& far)
+	inline mat4f perspective(const float& _aspect, const float& _fov, const float& _near, const float& _far)
 	{
 		mat4f m;
 
 #if defined(TE_RIGHT_HANDED)
 #	if defined(TE_ZERO_TO_ONE)
-		float tanFoV2 = tanf(fov / 2.0f);
+		float tanFoV2 = tanf(_fov / 2.0f);
 
-		m.m11 = 1.0f / (aspect * tanFoV2);
+		m.m11 = 1.0f / (_aspect * tanFoV2);
 		m.m22 = 1.0f / tanFoV2;
-		m.m33 = -far / (far - near);
-		m.m34 = -(far * near) / (far - near);
+		m.m33 = -_far / (_far - _near);
+		m.m34 = -(_far * _near) / (_far - _near);
 		m.m43 = -1.0f;
 		m.m44 = 0.0f;
 #	else
-		float tanFoV2 = tanf(fov / 2.0f);
+		float tanFoV2 = tanf(_fov / 2.0f);
 
-		m.m11 = 1.0f / (aspect * tanFoV2);
+		m.m11 = 1.0f / (_aspect * tanFoV2);
 		m.m22 = 1.0f / tanFoV2;
-		m.m33 = -(far + near) / (far - near);
-		m.m34 = (2.0f * far * near) / (far - near);
+		m.m33 = -(_far + _near) / (_far - _near);
+		m.m34 = (2.0f * _far * _near) / (_far - _near);
 		m.m43 = -1.0f;
 		m.m44 = 0.0f;
 #	endif
 #else
 #	if defined(TE_ZERO_TO_ONE)
-		float tanFoV2 = tanf(fov / 2.0f);
+		float tanFoV2 = tanf(_fov / 2.0f);
 
-		m.m11 = 1.0f / (aspect * tanFoV2);
+		m.m11 = 1.0f / (_aspect * tanFoV2);
 		m.m22 = 1.0f / tanFoV2;
-		m.m33 = far / (far - near);
-		m.m34 = -(far * near) / (far - near);
+		m.m33 = _far / (_far - _near);
+		m.m34 = -(_far * _near) / (_far - _near);
 		m.m43 = 1.0f;
 		m.m44 = 0.0f;
 #	else
-		float tanFoV2 = tanf(fov / 2.0f);
+		float tanFoV2 = tanf(_fov / 2.0f);
 
-		m.m11 = 1.0f / (aspect * tanFoV2);
+		m.m11 = 1.0f / (_aspect * tanFoV2);
 		m.m22 = 1.0f / tanFoV2;
-		m.m33 = (far + near) / (far - near);
-		m.m34 = (2.0f * far * near) / (far - near);
+		m.m33 = (_far + _near) / (_far - _near);
+		m.m34 = (2.0f * _far * _near) / (_far - _near);
 		m.m43 = 1.0f;
 		m.m44 = 0.0f;
+#	endif
+#endif
+		return m;
+	}
+
+	inline mat4f ortho(const float& _l, const float& _r, const float& _b, const float& _t, const float& _n, const float& _f)
+	{
+		mat4f m;
+
+#if defined(TE_RIGHT_HANDED)
+#	if defined(TE_ZERO_TO_ONE)
+
+#	else
+
+#	endif
+#else
+#	if defined(TE_ZERO_TO_ONE)
+
+#	else
+
 #	endif
 #endif
 		return m;
