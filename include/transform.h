@@ -6,32 +6,10 @@
 
 namespace math
 {
-	inline mat4f perspective(const float& _aspect, const float& _fov, const float& _near, const float& _far)
+	inline mat4f perspective_lh_zo(const float& _aspect, const float& _fov, const float& _near, const float& _far)
 	{
 		mat4f m;
 
-#if defined(TE_RIGHT_HANDED)
-#	if defined(TE_ZERO_TO_ONE)
-		float tanFoV2 = tanf(_fov / 2.0f);
-
-		m.m11 = 1.0f / (_aspect * tanFoV2);
-		m.m22 = 1.0f / tanFoV2;
-		m.m33 = -_far / (_far - _near);
-		m.m34 = -(_far * _near) / (_far - _near);
-		m.m43 = -1.0f;
-		m.m44 = 0.0f;
-#	else
-		float tanFoV2 = tanf(_fov / 2.0f);
-
-		m.m11 = 1.0f / (_aspect * tanFoV2);
-		m.m22 = 1.0f / tanFoV2;
-		m.m33 = -(_far + _near) / (_far - _near);
-		m.m34 = (2.0f * _far * _near) / (_far - _near);
-		m.m43 = -1.0f;
-		m.m44 = 0.0f;
-#	endif
-#else
-#	if defined(TE_ZERO_TO_ONE)
 		float tanFoV2 = tanf(_fov / 2.0f);
 
 		m.m11 = 1.0f / (_aspect * tanFoV2);
@@ -40,7 +18,14 @@ namespace math
 		m.m34 = -(_far * _near) / (_far - _near);
 		m.m43 = 1.0f;
 		m.m44 = 0.0f;
-#	else
+
+		return m;
+	}
+
+	inline mat4f perspective_lh_no(const float& _aspect, const float& _fov, const float& _near, const float& _far)
+	{
+		mat4f m;
+
 		float tanFoV2 = tanf(_fov / 2.0f);
 
 		m.m11 = 1.0f / (_aspect * tanFoV2);
@@ -49,29 +34,130 @@ namespace math
 		m.m34 = (2.0f * _far * _near) / (_far - _near);
 		m.m43 = 1.0f;
 		m.m44 = 0.0f;
+
+		return m;
+	}
+
+	inline mat4f perspective_rh_zo(const float& _aspect, const float& _fov, const float& _near, const float& _far)
+	{
+		mat4f m;
+
+		float tanFoV2 = tanf(_fov / 2.0f);
+
+		m.m11 = 1.0f / (_aspect * tanFoV2);
+		m.m22 = 1.0f / tanFoV2;
+		m.m33 = -_far / (_far - _near);
+		m.m34 = -(_far * _near) / (_far - _near);
+		m.m43 = -1.0f;
+		m.m44 = 0.0f;
+
+		return m;
+	}
+
+	inline mat4f perspective_rh_no(const float& _aspect, const float& _fov, const float& _near, const float& _far)
+	{
+		mat4f m;
+
+		float tanFoV2 = tanf(_fov / 2.0f);
+
+		m.m11 = 1.0f / (_aspect * tanFoV2);
+		m.m22 = 1.0f / tanFoV2;
+		m.m33 = -(_far + _near) / (_far - _near);
+		m.m34 = (2.0f * _far * _near) / (_far - _near);
+		m.m43 = -1.0f;
+		m.m44 = 0.0f;
+
+		return m;
+	}
+
+	inline mat4f perspective(const float& _aspect, const float& _fov, const float& _near, const float& _far)
+	{
+#if defined(TE_RIGHT_HANDED)
+#	if defined(TE_ZERO_TO_ONE)
+		return perspective_rh_zo(_aspect, _fov, _near, _far);
+#	else
+		return perspective_rh_no(_aspect, _fov, _near, _far);
+#	endif
+#else
+#	if defined(TE_ZERO_TO_ONE)
+		return perspective_lh_zo(_aspect, _fov, _near, _far);
+#	else
+		return perspective_lh_no(_aspect, _fov, _near, _far);
 #	endif
 #endif
+	}
+
+	inline mat4f ortho_lh_zo(const float& _l, const float& _r, const float& _b, const float& _t, const float& _n, const float& _f)
+	{
+		mat4f m;
+
+		m.m11 = 2.0f / (_r - _l);
+		m.m22 = 2.0f / (_t - _b);
+		m.m33 = 1.0f / (_f - _n);
+		m.m14 = -(_r + _l) / (_r - _l);
+		m.m24 = -(_t + _b) / (_t - _b);
+		m.m34 = -_n / (_f - _n);
+
+		return m;
+	}
+
+	inline mat4f ortho_lh_no(const float& _l, const float& _r, const float& _b, const float& _t, const float& _n, const float& _f)
+	{
+		mat4f m;
+
+		m.m11 = 2.0f / (_r - _l);
+		m.m22 = 2.0f / (_t - _b);
+		m.m33 = 2.0f / (_f - _n);
+		m.m14 = -(_r + _l) / (_r - _l);
+		m.m24 = -(_t + _b) / (_t - _b);
+		m.m34 = -(_f + _n) / (_f - _n);
+
+		return m;
+	}
+
+	inline mat4f ortho_rh_zo(const float& _l, const float& _r, const float& _b, const float& _t, const float& _n, const float& _f)
+	{
+		mat4f m;
+
+		m.m11 = 2.0f / (_r - _l);
+		m.m22 = 2.0f / (_t - _b);
+		m.m33 = -1.0f / (_f - _n);
+		m.m14 = -(_r + _l) / (_r - _l);
+		m.m24 = -(_t + _b) / (_t - _b);
+		m.m34 = -_n / (_f - _n);
+
+		return m;
+	}
+
+	inline mat4f ortho_rh_no(const float& _l, const float& _r, const float& _b, const float& _t, const float& _n, const float& _f)
+	{
+		mat4f m;
+
+		m.m11 = 2.0f / (_r - _l);
+		m.m22 = 2.0f / (_t - _b);
+		m.m33 = -2.0f / (_f - _n);
+		m.m14 = -(_r + _l) / (_r - _l);
+		m.m24 = -(_t + _b) / (_t - _b);
+		m.m34 = -(_f + _n) / (_f - _n);
+
 		return m;
 	}
 
 	inline mat4f ortho(const float& _l, const float& _r, const float& _b, const float& _t, const float& _n, const float& _f)
 	{
-		mat4f m;
-
 #if defined(TE_RIGHT_HANDED)
 #	if defined(TE_ZERO_TO_ONE)
-
+		return ortho_rh_zo(_l, _r, _b, _t, _n, _f);
 #	else
-
+		return ortho_rh_no(_l, _r, _b, _t, _n, _f);
 #	endif
 #else
 #	if defined(TE_ZERO_TO_ONE)
-
+		return ortho_lh_zo(_l, _r, _b, _t, _n, _f);
 #	else
-
+		return ortho_lh_no(_l, _r, _b, _t, _n, _f);
 #	endif
 #endif
-		return m;
 	}
 
 	inline mat4f rotation(const float& _radians, const vec3f& _axis)
