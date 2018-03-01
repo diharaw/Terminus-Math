@@ -31,7 +31,7 @@ namespace math
 		m.m11 = 1.0f / (_aspect * tanFoV2);
 		m.m22 = 1.0f / tanFoV2;
 		m.m33 = (_far + _near) / (_far - _near);
-		m.m34 = (2.0f * _far * _near) / (_far - _near);
+		m.m34 = -(2.0f * _far * _near) / (_far - _near);
 		m.m43 = 1.0f;
 		m.m44 = 0.0f;
 
@@ -46,7 +46,7 @@ namespace math
 
 		m.m11 = 1.0f / (_aspect * tanFoV2);
 		m.m22 = 1.0f / tanFoV2;
-		m.m33 = -_far / (_far - _near);
+		m.m33 = _far / (_near - _far);
 		m.m34 = -(_far * _near) / (_far - _near);
 		m.m43 = -1.0f;
 		m.m44 = 0.0f;
@@ -63,7 +63,7 @@ namespace math
 		m.m11 = 1.0f / (_aspect * tanFoV2);
 		m.m22 = 1.0f / tanFoV2;
 		m.m33 = -(_far + _near) / (_far - _near);
-		m.m34 = (2.0f * _far * _near) / (_far - _near);
+		m.m34 = -(2.0f * _far * _near) / (_far - _near);
 		m.m43 = -1.0f;
 		m.m44 = 0.0f;
 
