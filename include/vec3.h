@@ -91,6 +91,11 @@ namespace math
 			return v.normalize();
 		}
 
+		inline vec3 lerp(const vec3& b, float t) const
+		{
+			return t < 0.0f ? *this : (t > 1.0f ? b : (*this * (1.0f - t) + b * t));;
+		}
+
 		inline void print() const
 		{
 			printf("[%f, %f, %f]\n", x, y, z);

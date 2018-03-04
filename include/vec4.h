@@ -71,6 +71,11 @@ namespace math
 			return vec4(x / l, y / l, z / l, w / l);
 		}
 
+		inline vec4 lerp(const vec4& b, float t) const
+		{
+			return t < 0.0f ? *this : (t > 1.0f ? b : (*this * (1.0f - t) + b * t));;
+		}
+
 		inline void print() const
 		{
 			printf("[%f, %f, %f, %f]\n", x, y, z, w);

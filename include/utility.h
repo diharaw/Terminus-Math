@@ -14,4 +14,9 @@ namespace math
 	{
 		return (_radians * 180.0f) / float(M_PI);
 	}
+
+	inline float lerp(float a, float b, float t)
+	{
+		return t < 0.0f ? a : (t > 1.0f ? b : (a * (1.0f - t) + b * t));
+	}
 }
