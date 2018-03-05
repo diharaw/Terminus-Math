@@ -6,6 +6,69 @@
 
 namespace math
 {
+	inline mat4f lookat_lh(const vec3f& eye, const vec3f& origin, const vec3f& up)
+	{
+		vec3f front = eye.direction(origin);
+		vec3f right = up.cross(front).normalize();
+		vec3f up = front.cross(right).normalize();
+
+		mat4f m;
+
+		m.m11 = right.x;
+		m.m21 = right.y;
+		m.m31 = right.z;
+
+		m.m12 = up.x;
+		m.m22 = up.y;
+		m.m32 = up.z;
+
+		m.m13 = front.x;
+		m.m23 = front.y;
+		m.m33 = front.z;
+
+		m.m41 = -right.dot(eye);
+		m.m42 = -up.dot(eye);
+		m.m43 = -front.dot(eye);
+
+		return m;
+	}
+
+	inline mat4f lookat_rh(const vec3f& eye, const vec3f& origin, const vec3f& up)
+	{
+		vec3f front = eye.direction(origin);
+		vec3f right = front.cross(up).normalize();
+		vec3f up = right.cross(front).normalize();
+
+		mat4f m;
+
+		m.m11 = right.x;
+		m.m21 = right.y;
+		m.m31 = right.z;
+
+		m.m12 = up.x;
+		m.m22 = up.y;
+		m.m32 = up.z;
+
+		m.m13 = -front.x;
+		m.m23 = -front.y;
+		m.m33 = -front.z;
+
+		m.m41 = -right.dot(eye);
+		m.m42 = -up.dot(eye);
+		m.m43 = -front.dot(eye);
+
+		return m;
+	}
+
+	inline mat4f lookat(const vec3f& eye, const vec3f& origin, const vec3f& up)
+	{
+#	if defined(TE_RIGHT_HANDED)
+		return lookat_rh(eye, origin, up);
+#	else
+		return lookat_lh(eye, origin, up);
+#	endif
+	}
+
 	inline mat4f perspective_lh_zo(const float& _aspect, const float& _fov, const float& _near, const float& _far)
 	{
 		mat4f m;
