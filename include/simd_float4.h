@@ -8,27 +8,44 @@ namespace math
 	{
 		struct float4
 		{
-			__m128 data;
+            __m128 data;
 
-			float4(const float& _x = 0.0f, const float& _y = 0.0f, const float& _z = 0.0f, const float& _w = 0.0f)
+			inline float4(const float& _x = 0.0f, const float& _y = 0.0f, const float& _z = 0.0f, const float& _w = 0.0f)
 			{
 				float v[] = { _x, _y, _z, _w };
 				load(&v[0]);
 			}
 
-			float4(__m128 _data) : data(_data)
+			inline float4(__m128 _data) : data(_data)
 			{
 
 			}
 
-			float4(const float* _data)
+			inline float4(const float* _data)
 			{
 				load(_data);
 			}
+            
+            inline float4(const float4& rhs) : data(rhs.data)
+            {
+                
+            }
+            
+            inline float4& operator=(const __m128& rhs)
+            {
+                data = rhs;
+                return *this;
+            }
+            
+            inline float4& operator=(const float4& rhs)
+            {
+                data = rhs.data;
+                return *this;
+            }
 
 			inline void load(const float* _data)
 			{
-				_mm_load_ps(_data);
+				data = _mm_load_ps(_data);
 			}
 
 			inline void store(float* _data)

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdint.h>
+#include <assert.h>
 
 namespace math
 {
