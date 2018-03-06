@@ -109,10 +109,10 @@ namespace math
 
 		inline T determinant() const
 		{
-			return (m11 * (m22((m33 * m44) - (m34 * m43)) + m23((m34 * m42) - (m32 * m44)) + m24((m32 * m43) - (m33 * m42)))) 
-				 - (m12 * (m21((m33 * m44) - (m34 * m43)) + m23((m34 * m41) - (m31 * m44)) + m24((m31 * m43) - (m33 * m41))))
-				 + (m13 * (m21((m32 * m44) - (m34 * m42)) + m22((m34 * m41) - (m31 * m44)) + m24((m31 * m42) - (m32 * m41))))
-				 - (m14 * (m21((m32 * m43) - (m33 * m42)) + m22((m33 * m41) - (m31 * m43)) + m23((m31 * m42) - (m32 * m41))));
+			return (m11 * (m22 * ((m33 * m44) - (m34 * m43)) + m23 * ((m34 * m42) - (m32 * m44)) + m24 * ((m32 * m43) - (m33 * m42))))
+				 - (m12 * (m21 * ((m33 * m44) - (m34 * m43)) + m23 * ((m34 * m41) - (m31 * m44)) + m24 * ((m31 * m43) - (m33 * m41))))
+				 + (m13 * (m21 * ((m32 * m44) - (m34 * m42)) + m22 * ((m34 * m41) - (m31 * m44)) + m24 * ((m31 * m42) - (m32 * m41))))
+				 - (m14 * (m21 * ((m32 * m43) - (m33 * m42)) + m22 * ((m33 * m41) - (m31 * m43)) + m23 * ((m31 * m42) - (m32 * m41))));
 		}
 
 		inline mat4 adjoint() const
@@ -176,6 +176,16 @@ namespace math
 
 			return r;
 		}
+        
+        friend mat4 operator/(const mat4& lhs, const T& rhs)
+        {
+            mat4 r;
+            
+            for (int i = 0; i < 16; i++)
+                r.elem[i] = lhs.elem[i] / rhs;
+            
+            return r;
+        }
 
 		friend vec4<T> operator*(const mat4& lhs, const vec4<T>& rhs)
 		{
