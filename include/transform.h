@@ -431,9 +431,9 @@ namespace math
 		quat q;
 
 		q.w = cosf(_y / 2.0f) * cosf(_x / 2.0f) * cosf(_z / 2.0f) + sinf(_y / 2.0f) * sinf(_x / 2.0f) * sinf(_z / 2.0f);
-		q.v.x = cosf(_y / 2.0f) * sinf(_x / 2.0f) * cosf(_z / 2.0f) - sinf(_y / 2.0f) * cosf(_x / 2.0f) * sinf(_z / 2.0f);
-		q.v.y = cosf(_y / 2.0f) * sinf(_x / 2.0f) * sinf(_z / 2.0f) - sinf(_y / 2.0f) * cosf(_x / 2.0f) * cosf(_z / 2.0f);
-		q.v.z = sinf(_y / 2.0f) * sinf(_x / 2.0f) * cosf(_z / 2.0f) - cosf(_y / 2.0f) * cosf(_x / 2.0f) * sinf(_z / 2.0f);
+		q.v.x = cosf(_y / 2.0f) * sinf(_x / 2.0f) * cosf(_z / 2.0f) + sinf(_y / 2.0f) * cosf(_x / 2.0f) * sinf(_z / 2.0f);
+		q.v.y = sinf(_y / 2.0f) * cosf(_x / 2.0f) * cosf(_z / 2.0f) - cosf(_y / 2.0f) * sinf(_x / 2.0f) * sinf(_z / 2.0f);
+		q.v.z = cosf(_y / 2.0f) * cosf(_x / 2.0f) * sinf(_z / 2.0f) - sinf(_y / 2.0f) * sinf(_x / 2.0f) * cosf(_z / 2.0f);
 
 		return q;
 	}
@@ -471,7 +471,7 @@ namespace math
 	{
 		vec3f e;
 
-		float sp = -2.0f * (_quat.v.y - _quat.w * _quat.v.x);
+		float sp = -2.0f * (_quat.v.y *_quat.v.z - _quat.w * _quat.v.x);
 
 		if (fabs(sp) > 0.9999f)
 		{
